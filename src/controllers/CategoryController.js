@@ -12,10 +12,8 @@ class CategoryController {
         .status(500)
         .json({ message: 'Erreur lors de la récupération de la catégorie' });
     }
-
   }
 
-  // Récupérer toutes les catégories
   static async getAllCategories(_req, res, next) {
     try {
       const result = await Category.getCategories();
@@ -29,22 +27,17 @@ class CategoryController {
     next();
   }
 
-  // Créer une nouvelle catégorie
   static async createCategory(req, res, next) {
     try {
       const name = req.body.name;
       await Category.createCategory(name);
       res.json('Added successfully');
     } catch (e) {
-      console.error(e.message);
-      res
-        .status(500)
-        .json({ message: 'Erreur lors de la création de la catégorie' });
+      console.log(e.message);
     }
     next();
   }
 
-  // Supprimer une catégorie par ID
   static async deleteCategory(req, res, next) {
     try {
       const id = req.params.id;
@@ -59,7 +52,6 @@ class CategoryController {
     next();
   }
 
-  // Mettre à jour une catégorie par ID
   static async updateCategory(req, res, next) {
     try {
       const id = req.params.id;

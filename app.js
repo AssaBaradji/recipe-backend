@@ -15,11 +15,12 @@ const corsOptions = {
     }
   },
 };
-app.use(router);
-app.use(routerC);
-app.use(cors(corsOptions));
 
 app.use(express.json());
+app.use(cors(corsOptions));
+
+app.use(router);
+app.use(routerC);
 
 app.listen(port, () => {
   console.log(`Serveur lancé sur le port ${port}`);
