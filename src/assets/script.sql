@@ -1,5 +1,5 @@
-CREATE DATABASE recipe_management;
-USE recipe_management;
+CREATE DATABASE recipe_management1;
+USE recipe_management1;
 
 CREATE TABLE recipes (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -7,3 +7,23 @@ CREATE TABLE recipes (
     type VARCHAR(50) NOT NULL,
     ingredient TEXT NOT NULL
 );
+
+
+CREATE TABLE categories (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name TEXT NOT NULL
+);
+
+ALTER TABLE recipes
+ADD COLUMN category_id INT NOT NULL,
+ADD CONSTRAINT fk_category
+FOREIGN KEY (category_id) REFERENCES categories(id);
+
+
+
+
+
+INSERT INTO categories (name) VALUES ('Cuisine Française');
+INSERT INTO categories (name) VALUES ('Cuisine Italienne');
+INSERT INTO categories (name) VALUES ('Cuisine Mexicaine');
+INSERT INTO categories (name) VALUES ('Cuisine Asiatique');

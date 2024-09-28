@@ -1,22 +1,22 @@
 import { Recipe } from "../src/models/Recipe.js";
 
 describe("Recipe Model Tests", () => {
-  let recipeId = null;
+  let recipeId = 45;
 
   it("can create a recipe", async () => {
     const recipe = {
-      title: "domoda",
+      title: "",
       type: "plat Entier",
-      ingredient: "sel,eau, ll"
+      ingredient: "sel,eau, ll",
     };
 
     recipeId = await Recipe.createRecipe(
       recipe.title,
       recipe.type,
-      recipe.ingredient
+      recipe.ingredient,
     );
     const recipeCreated = await Recipe.getRecipes();
-    const createdRecipe = recipeCreated.find(r => r.id === recipeId);
+    const createdRecipe = recipeCreated.find((r) => r.id === recipeId);
 
     expect(recipeId).not.toBeNull();
     expect(createdRecipe).not.toBeUndefined();
@@ -43,11 +43,11 @@ describe("Recipe Model Tests", () => {
       recipeId,
       updatedRecipe.title,
       updatedRecipe.type,
-      updatedRecipe.ingredient
+      updatedRecipe.ingredient,
     );
     const updatedRecipeFromDb = await Recipe.getRecipes();
 
-    const updatedRecipeObj = updatedRecipeFromDb.find(r => r.id === recipeId);
+    const updatedRecipeObj = updatedRecipeFromDb.find((r) => r.id === recipeId);
 
     expect(result).toBe(true);
     expect(updatedRecipeObj.title).toBe(updatedRecipe.title);
@@ -59,7 +59,9 @@ describe("Recipe Model Tests", () => {
     const result = await Recipe.destroyRecipe(recipeId);
     const recipesAfterDeletion = await Recipe.getRecipes();
 
-    const recipeAfterDeletion = recipesAfterDeletion.find(r => r.id === recipeId);
+    const recipeAfterDeletion = recipesAfterDeletion.find(
+      (r) => r.id === recipeId,
+    );
 
     expect(result).toBe(true);
     expect(recipeAfterDeletion).toBeUndefined();

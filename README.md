@@ -8,7 +8,6 @@ Ce projet backend a été développé en Express.js pour gérer des recettes via
 
 ![Diagramme de Classes](./src/assets/D-class.png)
 
-
 ## Prérequis
 
 Avant de commencer, assurez-vous d'avoir les éléments suivants installés :
@@ -44,7 +43,7 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 
 3. Dans le fichier `/config/db.js`, remplacez vos informations d'identification dans la section suivante pour connecter l'application à votre base de données :
 
-```bash 
+```bash
  {
   user: "votre_nom_utilisateur",
   password: "votre_mot_de_passe",
@@ -59,8 +58,8 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 ```
 
 ## Tests avec Postman
- Dans le fichier `/assets/Recipe API.postman_collection.json`, une collection qui contient les quatre verbe Http pour testé les API
 
+Dans le fichier `/assets/Recipe API.postman_collection.json`, une collection qui contient les quatre verbe Http pour testé les API
 
 ## Endpoints de l'API
 
@@ -116,10 +115,9 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 
 ## Tests Unitaires
 
-  - tests unitaires pour notre modèle afin de vérifier que les actions CRUD fonctionnent correctement.
- 
+- tests unitaires pour notre modèle afin de vérifier que les actions CRUD fonctionnent correctement.
 
- la commande pour exécuter les tests :
+la commande pour exécuter les tests :
 
 ```bash
   npm test
@@ -139,7 +137,6 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 ```bash
   npn run format
 ```
-
 
 ## Auteur
 

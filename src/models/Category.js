@@ -1,11 +1,11 @@
 import { pool } from '../config/db.js';
 
-class Recipe {
-  static async getRecipeById(id) {
+class Category {
+  static async getCategoryById(id) {
     const connection = await pool.getConnection();
     try {
       const [result] = await connection.execute(
-        'SELECT * FROM recipes WHERE id = ?',
+        'SELECT * FROM categories WHERE id = ?',
         [id],
       );
       return result.length > 0 ? result[0] : null;
@@ -14,22 +14,22 @@ class Recipe {
     }
   }
 
-  static async getRecipes() {
+  static async getCategories() {
     const connection = await pool.getConnection();
     try {
-      const [result] = await connection.execute('SELECT * FROM recipes');
+      const [result] = await connection.execute('SELECT * FROM categories');
       return result;
     } finally {
       connection.release();
     }
   }
 
-  static async createRecipe(title, type, ingredient) {
+  static async createCategory(name) {
     const connection = await pool.getConnection();
     try {
       const [result] = await connection.execute(
-        'INSERT INTO recipes (title, type, ingredient) VALUES (?, ?, ?)',
-        [title, type, ingredient],
+        'INSERT INTO categories (name) VALUES (?)',
+        [name],
       );
       return result.insertId;
     } finally {
@@ -37,35 +37,35 @@ class Recipe {
     }
   }
 
-  static async updateRecipe(id, title, ingredient, type) {
+  static async updateCategory(id, name) {
     const connection = await pool.getConnection();
     try {
-      await connection.execute(
-        'UPDATE recipes SET title = ?, type = ?, ingredient = ? WHERE id = ?',
-        [title, ingredient, type, id],
-      );
+      await connection.execute('UPDATE categories SET name = ? WHERE id = ?', [
+        name,
+        id,
+      ]);
       return true;
     } finally {
       connection.release();
     }
   }
 
-  static async destroyRecipe(id) {
+  static async destroyCategory(id) {
     const connection = await pool.getConnection();
     try {
-      await connection.execute('DELETE FROM recipes WHERE id = ?', [id]);
+      await connection.execute('DELETE FROM categories WHERE id = ?', [id]);
       return true;
     } finally {
       connection.release();
     }
   }
 
-  static async checkRecipe(title) {
+  static async checkCategory(name) {
     const connection = await pool.getConnection();
     try {
       const [result] = await connection.execute(
-        'SELECT COUNT(*) as count FROM recipes WHERE title = ?',
-        [title],
+        'SELECT COUNT(*) as count FROM categories WHERE name= ?',
+        [name],
       );
       return result[0].count;
     } finally {
@@ -77,7 +77,7 @@ class Recipe {
     const connection = await pool.getConnection();
     try {
       const [result] = await connection.execute(
-        'SELECT COUNT(*) as count FROM recipes WHERE id = ?',
+        'SELECT COUNT(*) as count FROM categories WHERE id = ?',
         [id],
       );
       return result[0].count;
@@ -87,4 +87,4 @@ class Recipe {
   }
 }
 
-export { Recipe };
+export { Category };
