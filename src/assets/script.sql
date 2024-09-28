@@ -20,10 +20,3 @@ ADD CONSTRAINT fk_category
 FOREIGN KEY (category_id) REFERENCES categories(id);
 
 
-
-
-
-INSERT INTO categories (name) VALUES ('Cuisine Française');
-INSERT INTO categories (name) VALUES ('Cuisine Italienne');
-INSERT INTO categories (name) VALUES ('Cuisine Mexicaine');
-INSERT INTO categories (name) VALUES ('Cuisine Asiatique');

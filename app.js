@@ -6,6 +6,7 @@ import cors from "cors";
 const app = express();
 const port = 3002;
 
+
 const corsOptions = {
   origin: (origin, callback) => {
     if (["http://localhost:5173"].includes(origin) || !origin) {
@@ -15,11 +16,15 @@ const corsOptions = {
     }
   },
 };
-app.use(router);
-app.use(routerC);
+
+
 app.use(cors(corsOptions));
 
 app.use(express.json());
+
+
+app.use(router);
+app.use(routerC);
 
 app.listen(port, () => {
   console.log(`Serveur lancé sur le port ${port}`);

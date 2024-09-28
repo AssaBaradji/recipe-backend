@@ -6,7 +6,7 @@ Ce projet backend a été développé en Express.js pour gérer des recettes via
 
 ## Diagramme de Classes
 
-![Diagramme de Classes](./src/assets/D-class.png)
+![Diagramme de Classes](./src/assets/D-classe.png)
 
 ## Prérequis
 
