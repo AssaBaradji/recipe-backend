@@ -1,19 +1,21 @@
 import { Recipe } from "../src/models/Recipe.js";
 
 describe("Recipe Model Tests", () => {
-  let recipeId = 45;
+  let recipeId;
+  const categoryId = 1; // Utilisez un ID de catégorie valide
 
   it("can create a recipe", async () => {
     const recipe = {
-      title: "",
+      title: "Mafé",
       type: "plat Entier",
-      ingredient: "sel,eau, ll",
+      ingredient: "sel, eau, ll",
     };
 
     recipeId = await Recipe.createRecipe(
       recipe.title,
       recipe.type,
       recipe.ingredient,
+      categoryId,
     );
     const recipeCreated = await Recipe.getRecipes();
     const createdRecipe = recipeCreated.find((r) => r.id === recipeId);
@@ -23,6 +25,7 @@ describe("Recipe Model Tests", () => {
     expect(createdRecipe.title).toBe(recipe.title);
     expect(createdRecipe.type).toBe(recipe.type);
     expect(createdRecipe.ingredient).toBe(recipe.ingredient);
+    expect(createdRecipe.category_id).toBe(categoryId);
   });
 
   it("can retrieve all recipes", async () => {
@@ -46,7 +49,6 @@ describe("Recipe Model Tests", () => {
       updatedRecipe.ingredient,
     );
     const updatedRecipeFromDb = await Recipe.getRecipes();
-
     const updatedRecipeObj = updatedRecipeFromDb.find((r) => r.id === recipeId);
 
     expect(result).toBe(true);

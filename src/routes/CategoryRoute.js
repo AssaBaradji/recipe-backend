@@ -3,7 +3,6 @@ import { CategoryController } from '../controllers/CategoryController.js';
 import { addCategoryValidator, updateCategoryValidator, deleteCategoryValidator } from '../Validators/CategoryValidator.js';
 
 
-
 const routerC = express.Router();
 
 routerC.get('/categories', CategoryController.getAllCategories);
@@ -15,6 +14,5 @@ routerC.post('/categories', addCategoryValidator, CategoryController.createCateg
 routerC.put('/categories/:id', updateCategoryValidator, CategoryController.updateCategory);
 
 routerC.delete('/categories/:id', deleteCategoryValidator, CategoryController.deleteCategory);
-
 
 export { routerC };
