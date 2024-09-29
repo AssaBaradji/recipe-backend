@@ -2,13 +2,14 @@ import { check, param, validationResult } from 'express-validator';
 import { StatusCodes } from 'http-status-codes';
 import { Recipe } from '../models/Recipe.js';
 
+// Validateur pour ajouter une recette
 const addRequestValidator = [
   check('title')
     .notEmpty()
-    .withMessage('Titre ne peut pas être vide!')
+    .withMessage('Le titre ne peut pas être vide!')
     .bail()
     .isLength({ min: 4 })
-    .withMessage('Minimum 6 caractères requis!')
+    .withMessage('Le titre doit comporter au moins 4 caractères!')
     .bail()
     .custom(async (value) => {
       const count = await Recipe.checkRecipe(value);
@@ -19,34 +20,41 @@ const addRequestValidator = [
     }),
   check('type')
     .notEmpty()
-    .withMessage('Type ne peut pas être vide!')
+    .withMessage('Le type ne peut pas être vide!')
     .bail()
     .isLength({ min: 4 })
-    .withMessage('Minimum 4 caractères requis!')
+    .withMessage('Le type doit comporter au moins 4 caractères!')
+    .bail(),
+  check('ingredient')
+    .notEmpty()
+    .withMessage('Les ingrédients ne peuvent pas être vides!')
+    .bail()
+    .isLength({ min: 10, max: 50 })
+    .withMessage('Les ingrédients doivent comporter entre 10 et 50 caractères!')
+    .bail(),
+  check('category_id')
+    .notEmpty()
+    .withMessage('La catégorie est obligatoire!')
+    .bail()
+    .isInt({ min: 1 })
+    .withMessage('La catégorie doit être un entier valide!')
     .bail(),
   (req, res, next) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty())
+    if (!errors.isEmpty()) {
       return res
         .status(StatusCodes.UNPROCESSABLE_ENTITY)
         .json({ errors: errors.array() });
+    }
     next();
   },
-
-  check('ingredient')
-    .notEmpty()
-    .withMessage('Ingredients ne peut pas être vide!')
-    .bail()
-    .isLength({ min: 10, max: 50 })
-    .withMessage('Entre 10 et 50 caractères!')
-    .bail(),
 ];
 
+// Validateur pour supprimer une recette
 const deleteRequestValidator = [
   param('id')
-    .not()
-    .isEmpty()
-    .withMessage('Id est obligatoire!')
+    .notEmpty()
+    .withMessage("L'ID est obligatoire!")
     .bail()
     .custom(async (value) => {
       const count = await Recipe.existsById(value);
@@ -57,18 +65,20 @@ const deleteRequestValidator = [
     }),
   (req, res, next) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty())
+    if (!errors.isEmpty()) {
       return res
         .status(StatusCodes.UNPROCESSABLE_ENTITY)
         .json({ errors: errors.array() });
+    }
     next();
   },
 ];
 
+// Validateur pour mettre à jour une recette
 const updateRequestValidator = [
   param('id')
     .notEmpty()
-    .withMessage('Id est requis!')
+    .withMessage("L'ID est requis!")
     .bail()
     .custom(async (value) => {
       const count = await Recipe.existsById(value);
@@ -79,10 +89,10 @@ const updateRequestValidator = [
     }),
   check('title')
     .notEmpty()
-    .withMessage('Titre ne doit pas être vide')
+    .withMessage('Le titre ne doit pas être vide!')
     .bail()
-    .isLength({ min: 6 })
-    .withMessage('Minimum 6 caractères requis!')
+    .isLength({ min: 4 })
+    .withMessage('Le titre doit comporter au moins 4 caractères!')
     .bail()
     .custom(async (value) => {
       const count = await Recipe.checkRecipe(value);
@@ -93,27 +103,34 @@ const updateRequestValidator = [
     }),
   check('type')
     .notEmpty()
-    .withMessage('Type ne peut pas être vide!')
+    .withMessage('Le type ne peut pas être vide!')
     .bail()
     .isLength({ min: 4 })
-    .withMessage('Minimum 4 caractères requis!')
+    .withMessage('Le type doit comporter au moins 4 caractères!')
+    .bail(),
+  check('ingredient')
+    .notEmpty()
+    .withMessage('Les ingrédients ne peuvent pas être vides!')
+    .bail()
+    .isLength({ min: 10, max: 50 })
+    .withMessage('Les ingrédients doivent comporter entre 10 et 50 caractères!')
+    .bail(),
+  check('category_id')
+    .notEmpty()
+    .withMessage('La catégorie est obligatoire!')
+    .bail()
+    .isInt({ min: 1 })
+    .withMessage('La catégorie doit être un entier valide!')
     .bail(),
   (req, res, next) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty())
+    if (!errors.isEmpty()) {
       return res
         .status(StatusCodes.UNPROCESSABLE_ENTITY)
         .json({ errors: errors.array() });
+    }
     next();
   },
-
-  check('ingredient')
-    .notEmpty()
-    .withMessage('Ingredients ne peut pas être vide!')
-    .bail()
-    .isLength({ min: 10, max: 50 })
-    .withMessage('Entre 10 et 50 caractères!')
-    .bail(),
 ];
 
 export { addRequestValidator, deleteRequestValidator, updateRequestValidator };

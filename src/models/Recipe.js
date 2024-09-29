@@ -24,12 +24,13 @@ class Recipe {
     }
   }
 
-  static async createRecipe(title, type, ingredient) {
+  // Modifié pour inclure category_id
+  static async createRecipe(title, type, ingredient, category_id) {
     const connection = await pool.getConnection();
     try {
       const [result] = await connection.execute(
-        'INSERT INTO recipes (title, type, ingredient) VALUES (?, ?, ?)',
-        [title, type, ingredient],
+        'INSERT INTO recipes (title, type, ingredient, category_id) VALUES (?, ?, ?, ?)',
+        [title, type, ingredient, category_id],
       );
       return result.insertId;
     } finally {
@@ -37,12 +38,13 @@ class Recipe {
     }
   }
 
-  static async updateRecipe(id, title, ingredient, type) {
+  // Modifié pour inclure category_id
+  static async updateRecipe(id, title, ingredient, type, category_id) {
     const connection = await pool.getConnection();
     try {
       await connection.execute(
-        'UPDATE recipes SET title = ?, type = ?, ingredient = ? WHERE id = ?',
-        [title, ingredient, type, id],
+        'UPDATE recipes SET title = ?, type = ?, ingredient = ?, category_id = ? WHERE id = ?',
+        [title, type, ingredient, category_id, id],
       );
       return true;
     } finally {
