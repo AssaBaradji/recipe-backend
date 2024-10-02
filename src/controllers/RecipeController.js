@@ -21,17 +21,24 @@ class RecipeController {
     next();
   }
 
-  static async createRecipe(req, res, next) {
-    try {
-      const title = req.body.title;
-      const type = req.body.type;
-      const ingredient = req.body.ingredient;
-      await Recipe.createRecipe(title, ingredient, type);
-      res.json('Added successfully');
-    } catch (e) {
-      console.log(e.message);
+  static async createRecipe(req, res) {
+    const { title, type, ingredient, category_id } = req.body;
+
+    if (!title || !type || !ingredient || category_id === undefined) {
+      return res.status(400).json({ error: 'All fields are required' });
     }
-    next();
+
+    try {
+      const insertId = await Recipe.createRecipe(
+        title,
+        type,
+        ingredient,
+        category_id,
+      );
+      res.status(201).json({ message: 'Added successfully', id: insertId });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
   }
 
   static async deleteRecipe(req, res, next) {

@@ -88,4 +88,8 @@ const updateCategoryValidator = [
   },
 ];
 
-export { addCategoryValidator, deleteCategoryValidator, updateCategoryValidator };
+export {
+  addCategoryValidator,
+  deleteCategoryValidator,
+  updateCategoryValidator,
+};
