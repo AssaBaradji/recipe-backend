@@ -1,6 +1,19 @@
 import { pool } from '../config/db.js';
 
 class Category {
+  static async createCategory(name) {
+    const connection = await pool.getConnection();
+    try {
+      const [result] = await connection.execute(
+        'INSERT INTO categories (name) VALUES (?)',
+        [name],
+      );
+      return result.insertId;
+    } finally {
+      connection.release();
+    }
+  }
+
   static async getCategoryById(id) {
     const connection = await pool.getConnection();
     try {
@@ -24,18 +37,6 @@ class Category {
     }
   }
 
-  static async createCategory(name) {
-    const connection = await pool.getConnection();
-    try {
-      const [result] = await connection.execute(
-        'INSERT INTO categories (name) VALUES (?)',
-        [name],
-      );
-      return result.insertId;
-    } finally {
-      connection.release();
-    }
-  }
 
   static async updateCategory(id, name) {
     const connection = await pool.getConnection();

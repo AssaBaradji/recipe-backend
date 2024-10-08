@@ -1,6 +1,20 @@
 import { pool } from '../config/db.js';
 
 class Recipe {
+  static async createRecipe(title, type, ingredient, categoryId) {
+    const connection = await pool.getConnection();
+    try {
+      const [result] = await connection.execute(
+        'INSERT INTO recipes (title, type, ingredient, category_id) VALUES (?, ?, ?, ?)',
+        [title, type, ingredient, categoryId],
+      );
+      return result.insertId;
+    } finally {
+      connection.release();
+    }
+  }
+
+
   static async getRecipeById(id) {
     const connection = await pool.getConnection();
     try {
@@ -14,24 +28,20 @@ class Recipe {
     }
   }
 
+  
+
   static async getRecipes() {
     const connection = await pool.getConnection();
     try {
-      const [result] = await connection.execute('SELECT * FROM recipes');
-      return result;
-    } finally {
-      connection.release();
-    }
-  }
+      const [result] = await connection.execute(`
+        SELECT r.*, c.name AS category_name 
+        FROM recipes r
+        LEFT JOIN categories c ON r.category_id = c.id
+      `);
 
-  static async createRecipe(title, type, ingredient, categoryId) {
-    const connection = await pool.getConnection();
-    try {
-      const [result] = await connection.execute(
-        'INSERT INTO recipes (title, type, ingredient, category_id) VALUES (?, ?, ?, ?)',
-        [title, type, ingredient, categoryId],
-      );
-      return result.insertId;
+      return result.map((recipe) => ({
+        ...recipe,
+      }));
     } finally {
       connection.release();
     }

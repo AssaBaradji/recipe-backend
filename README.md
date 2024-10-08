@@ -6,7 +6,7 @@ Ce projet backend a été développé en Express.js pour gérer des recettes via
 
 ## Diagramme de Classes
 
-![Diagramme de Classes](./src/assets/D-classe.png)
+![Diagramme de Classes](./src/assets/Recette%20UML.png)
 
 ## Prérequis
 
@@ -22,7 +22,7 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 1. Clonez le dépôt :
 
 ```bash
-   git clone https://github.com/Zoubeir7/recipe-backend.git
+   git clone https://github.com/AssaBaradji/recipe-frontend.git
 ```
 
 2.Installez les dépendances :
@@ -49,15 +49,33 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
   password: "votre_mot_de_passe",
   database: "votre_nom_de_base_de_données",
 }
+
 ```
+
+## Connexion Backend et Frontend
+
+Le frontend (Vue.js) interagit avec le backend via des API HTTP.
+
+- **Endpoints API :** Les requêtes sont envoyées aux endpoints définis, par exemple, pour récupérer toutes les recettes.
+- **Utilisation d'Axios :** La bibliothèque Axios facilite les appels HTTP.
+
+- **Gestion des CORS :** Assurez-vous que le backend gère les CORS en ajoutant le middleware CORS dans Express.
 
 ## Utilisation
 
-```bash
-   npm start
-```
+Pour démarrer le serveur backend, exécutez la commande appropriée dans le terminal.
 
 ## Tests avec Postman
+
+Importez la collection Postman incluse pour tester facilement les endpoints.
+
+- Utilisation
+
+```bash
+  npm start
+```
+
+- Tests avec Postman
 
 Dans le fichier `/assets/Recipe API.postman_collection.json`, une collection qui contient les quatre verbe Http pour testé les API
 
@@ -189,8 +207,6 @@ la commande pour exécuter les tests :
 ```
 
 ## Auteur
-
-[Zoubeir Ba](https://github.com/Zoubeir7)
 
 ## Contributeur
 
